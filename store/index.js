@@ -1,37 +1,30 @@
 
-export const state = () => ({
-    users: {},
-    token: null,
-    user: null,
-})
+const actions = {
+    async onAuthStateChangedAction(state, { authUser, claims }) {
+      if (!authUser) {
 
-export const actions = {
-    // setToken: (state) => {
-    //     state.token = localStorage.getItem('token')
-    // },
-    // clearToken: (state) => {
-    //     localStorage.removeItem('token')
-    //     state.token = localStorage.getItem('token')
-    // },
-    async onAuthStateChangedAction(state, { authUser }) {
-        if (!authUser) {
-            await this.$router.push({path: '/login'})
-        } else {
-            const { uid, email } = authUser
-            state.commit('SET_USER', {uid, email})
-        }
+      } else {
+
+        const { uid, email } = authUser
+        const token = await authUser.getIdToken()
+  
+        commit('SET_USER', { uid, email, token })
+      }
     }
-}
-export const getters = {
-    getToken: (state) => state.token,
-    getUsers: (state) => state.users,
-    getUser: (state) => state.user
-};
-export const mutations = {
+  }
+  const mutations = {
     SET_USER(state, user) {
-        state.user = user
+      state.user = user
     }
-}
-export default {
-    state, actions, getters, mutations
-}
+  }
+  
+  const state = () => ({
+    user: null
+  })
+  
+  const getters = {
+    getUser(state) {
+      return state.user
+    }
+  }
+  export default (getters, state, mutations, actions)

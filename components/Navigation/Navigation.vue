@@ -4,14 +4,13 @@
       <div class="logo"><img src="~assets/wing.png" alt="wing-logo"></div>
     </div>
     <nav class="navigation__links">
-      <nuxt-link v-for="(name, index) in pageNames"
+      <button v-for="(name, index) in pageNames"
                  :key="index"
-                 @click="changeTable(index)"
+                 @click="setActivePage($event)"
                  class="navigation__link"
-                 :class="{active: activeIndex === index }"
-                 :to="{name}">
+                 :class="{active: activePage === index }">
         *{{ name }}*
-      </nuxt-link>
+      </button>
     </nav>
   </div>
 </template>
@@ -19,16 +18,21 @@
 <script>
 
 export default {
-  data() {
-    return {
-      activeIndex: 0,
-      pageNames: ["page-name-1", "page-name-2"],
-    }
+  props: {
+    pageNames: Array,
+    activePage: Number
   },
   methods: {
-    changeTable(index) {
-      return this.activeIndex = index
-    },
+    webcamSendRequestButton: function(e) {
+    // const buttonValue = e.target.value;
+    // console.log(e.target.value)
+    console.log(e);
+    }
+  ,
+  setActivePage(e){
+    this.$emit('setActivePage', e.target.innerText)
+    this.$router.go(0);
+  }
   }
 }
 </script>

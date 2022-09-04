@@ -6,8 +6,15 @@
 
 <script>
 export default {
-asyncData(){
-  this.$fire.auth.signOut()
+ async mounted() {
+   try {
+    const res = await this.$fire.auth.signOut()
+    console.log(res);
+    this.$router.push('/login')
+   }
+   catch(err){
+    alert(err.message);
+   }
   }
 }
 </script>

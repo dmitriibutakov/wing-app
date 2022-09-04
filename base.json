@@ -1,0 +1,155 @@
+{
+   "tablesData": {
+      "page-name-1": {
+         "*userId1*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId2*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId3*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId5*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId6*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId7*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId8*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId9*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId10": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId11": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ]
+      },
+      "page-name-2": {
+         "*taskId1*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*taskId2*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*taskId3*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*taskId4*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId5*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId6*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId7*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId8*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId9*": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId10": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ],
+         "*userId11": [
+            "*value1*",
+            "*value2*",
+            "*value3*",
+            "*value4*",
+            "*value5*"
+         ]
+      }
+   }
+}

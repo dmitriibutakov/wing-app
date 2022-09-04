@@ -36,19 +36,25 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
   ],
+  router: {
+    middleware: ['auth'],
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules:  [
+  modules: [
     [
       '@nuxtjs/firebase',
+
       {
         config: {
           apiKey: "AIzaSyAmMiJCvovKbCv62QksYO3z5bEhW5n9h-8",
-          authDomain: "fwing-app.firebaseapp.com",
-          projectId: "fwing-app",
-          storageBucket: "fwing-app.appspot.com",
-          messagingSenderId: "283787631279",
-          appId: "1:283787631279:web:2b1a819821b07d1c14d25a",
-          measurementId: "G-61GXXHY714"
+  authDomain: "fwing-app.firebaseapp.com",
+  databaseURL: "https://fwing-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "fwing-app",
+  storageBucket: "fwing-app.appspot.com",
+  messagingSenderId: "283787631279",
+  appId: "1:283787631279:web:2b1a819821b07d1c14d25a",
+  measurementId: "G-61GXXHY714"
         },
         services: {
           auth: {

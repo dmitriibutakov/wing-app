@@ -1,14 +1,13 @@
 
 export default function ({ store, route, redirect }) {
-    if (route.path !== '/login') {
-        if (!store.$fire.auth.currentUser) {
+    if (!store.$fire.auth._delegate.currentUser) {
+        if (route.path === '/') {
             return redirect('/login')
         }
-    } else if (route.path === '/login') {
-        if (store.$fire.auth.currentUser) {
+    } else if (store.$fire.auth._delegate.currentUser) {
+        if (route.path === '/login') {
             return redirect('/')
-        } else  {
-
+        } else {
         }
     }
 }

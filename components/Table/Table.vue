@@ -11,21 +11,24 @@
         </tr>
       </thead>
       <tbody class="table__body">
-        <tr class="table__body_row" v-for="(data, id) in usersData" :key="id">
+        <tr class="table__body_row" v-for="(data, index) in usersData" :key="index">
           <td class="table__body_value" v-for="(value, key) in data" :key="key">
             {{ value }}
           </td>
           <td class="table__body_value">
-            <button>edit button</button>
+            <button @toggleShowModal="toggleShowModal">edit button</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <Paginator :users-values="Object.keys(usersData).length" :portion-size="portionSize" :current-page="currentPage" />
+    <Paginator
+        :users-values="Object.keys(usersData).length"
+        :portion-size="portionSize"
+        :activePage="activePage" />
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {defineComponent} from "vue";
 import Paginator from "~/components/Paginator/Paginator.vue";
 
@@ -34,21 +37,17 @@ export default defineComponent({
     Paginator
   },
   props: {
-    tableName: String
+    tableName: String,
+    usersData: Object,
+    columnsTitle: Array,
+    portionSize: Number,
+    activePage: Number
   },
-  data() {
-    return {
-      currentPage: 1,
-      portionSize: 4,
-      columnsTitle: ['*column1*', '*column2*', '*column3*', '*column4*', '*column5*'],
-      usersData: {
-        '*userId1*': ['*value1*', '*value2*', '*value3*', '*value4*', '*value5*'],
-        '*userId2*': ['*value1*', '*value2*', '*value3*', '*value4*', '*value5*'],
-        '*userId3*': ['*value1*', '*value2*', '*value3*', '*value4*', '*value5*'],
-        '*userId4*': ['*value1*', '*value2*', '*value3*', '*value4*', '*value5*'],
-      }
+  methods: {
+    toggleShowModal(){
+      this.$emit('toggleShowModal')
     }
-  },
+  }
 })
 </script>
 
