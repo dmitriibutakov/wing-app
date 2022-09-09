@@ -1,57 +1,38 @@
 <template>
   <div class="register__block">
     <div class="register__logo">
-      <img src="~assets/wing.png" alt="wing-logo" />
+      <img src="~assets/wing.png" alt="wing-logo"/>
     </div>
     <form class="register__form">
       <input v-model="auth.email" placeholder="login" type="text">
       <input v-model="auth.password" placeholder="password" type="password">
     </form>
-    <button :disabled="loading" class="form__button" @click="login">Sign in</button>
-    <h3 v-show="snackbar">{{snackbarText}}</h3>
-    <p><span>email: googwing@gmail.com, password: 123456</span></p>
-    <button @click="getStorage">GETSTORAGE</button>
+    <button :disabled="getLoading" class="form__button" @click="login(auth)">Sign in</button>
+    <h3 v-show="getError">{{ getError }}</h3>
   </div>
 </template>
 
 <script>
+import {mapGetters, mapActions} from "vuex";
 
 export default {
-  data(){
+  data() {
     return {
-      snackbarText: "",
-      snackbar: false,
-      loading: false,
       auth: {
-
-        email: '',
-        password: ''
+        email: 'googwing@gmail.com',
+        password: '123456'
       }
-    }},
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getError: "getError",
+      getIsError: 'getIsError',
+      getLoading: "getLoading"
+    })
+  },
   methods: {
-    async login(){
-      this.loading = true
-      this.snackbarText = ""
-      try {
-       const res = await this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
-       this.auth.email = ''
-        this.auth.password = ''
-        console.log(res);
-        this.$router.push("/")
-      }
-      catch(err){
-        this.snackbar = true
-        this.snackbarText = err.message
-      }
-      finally {
-      this.loading = false
-    }
-    },
-    async getStorage() {
-      const e = this.$fire
-      console.log(e);
-    }
-    
+    ...mapActions({login: "login"}),
   }
 }
 </script>

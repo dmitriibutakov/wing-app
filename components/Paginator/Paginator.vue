@@ -2,14 +2,14 @@
   <div class="paginator__block">
     <button class="paginator__button"
             @click="getLeftPortionNumber"
-            :disabled="portionNumber <= 1">
+            :disabled="portionSize <= 1">
       &lt;
     </button>
-    <button v-for="page in Math.ceil(usersValues / portionSize)"
+    <button v-for="(page) in Math.ceil(usersValues / portionSize)"
             class="paginator__button"
             :key="page"
-            @click="currentPage = page"
-            :class="{currentPage: currentPage === page}">
+            @click="pageClick(page)"
+            :class="{currentPage: activePage === page}">
       {{ page }}
     </button>
     <button class="paginator__button"
@@ -25,47 +25,26 @@ export default {
   props: {
     usersValues: Number,
     portionSize: Number,
-    currentPage: {
-      type: Number,
-      default: 1
-    }
+    activePage: Number
   },
   data() {
     return {
-      portionNumber: 3,
       currentPortion: [],
     }
   },
-  computed: {
-    getLeftPortionNumber() {
-      return this.currentPage < 3 ? 1 : this.portionNumber - 2
-    },
-    getRightPortionNumber() {
-      return this.currentPage < 3 ? 3 : this.portionNumber + 2
-    },
-    setPortionNumberBack() {
-      console.log(this.portionNumber)
-      return this.portionNumber = this.portionNumber - 1
-    },
-    setPortionNumberUp() {
-      console.log(this.portionNumber)
-      return this.portionNumber = this.portionNumber + 1
-    }
-  },
   methods: {
-    loadUsers(page) {
-      `loading from page ${page}`
+    getLeftPortionNumber(page) {
+    },
+    getRightPortionNumber(page) {
+    },
+    pageClick(page) {
+      console.log(`loading users from page ${page}`)
     }
   },
-  watch: {
-    currentPage(page) {
-      this.loadUsers(page)
-    }
-  }
 }
 </script>
 
-<style scoped>
+<style>
 .paginator__block {
   display: flex;
   justify-content: end;

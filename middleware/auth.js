@@ -1,5 +1,4 @@
-
-export default function ({ store, route, redirect }) {
+export default function ({store, route, redirect}) {
     if (!store.$fire.auth._delegate.currentUser) {
         if (route.path === '/') {
             return redirect('/login')

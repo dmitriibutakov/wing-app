@@ -8,8 +8,7 @@
 export default {
  async mounted() {
    try {
-    const res = await this.$fire.auth.signOut()
-    console.log(res);
+    await this.$fire.auth.signOut()
     this.$router.push('/login')
    }
    catch(err){

@@ -1,43 +1,40 @@
 <template>
   <div class="navigation">
-    <div class="navigation__logo">
+    <nuxt-link to="/logout" class="navigation__logo">
       <div class="logo"><img src="~assets/wing.png" alt="wing-logo"></div>
-    </div>
+    </nuxt-link>
     <nav class="navigation__links">
-      <button v-for="(name, index) in pageNames"
-                 :key="index"
-                 @click="setActivePage($event)"
-                 class="navigation__link"
-                 :class="{active: activePage === index }">
-        *{{ name }}*
+      <button v-for="(name, index) in getPageNames"
+              :key="index"
+              @click="navigateTable($event.target.innerText)"
+              class="navigation__link" :class="{active: getActiveIndex === index }">
+        {{ name }}
       </button>
     </nav>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex"
 
 export default {
-  props: {
-    pageNames: Array,
-    activePage: Number
-  },
   methods: {
-    webcamSendRequestButton: function(e) {
-    // const buttonValue = e.target.value;
-    // console.log(e.target.value)
-    console.log(e);
+    ...mapActions({setActiveIndex: 'setActiveIndex', fetchTables: "fetchTables"}),
+    navigateTable(index) {
+      this.setActiveIndex(index)
+      this.fetchTables()
     }
-  ,
-  setActivePage(e){
-    this.$emit('setActivePage', e.target.innerText)
-    this.$router.go(0);
-  }
+  },
+  computed: {
+    ...mapGetters({
+      getActiveIndex: 'getActiveIndex',
+      getPageNames: 'getPageNames',
+    })
   }
 }
 </script>
 
-<style scoped>
+<style>
 .navigation {
   position: fixed;
   z-index: 1;
@@ -56,7 +53,7 @@ export default {
   left: 54px;
 }
 
-.logo img{
+.logo img {
   height: 45px;
   width: 45px;
 }
@@ -79,6 +76,7 @@ export default {
   position: relative;
   color: #7A529D;
 }
+
 .active::after {
 
   content: "";

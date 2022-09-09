@@ -3,55 +3,64 @@
     <h1 class="table__title">{{ tableName }}</h1>
     <table class="table__block">
       <thead>
-        <tr class="table__header">
-          <th class="table__header_column" v-for="(value, key) in columnsTitle" :key="key">
-            {{ value }}
-          </th>
-          <th class="table__header_column">edit</th>
-        </tr>
+      <tr class="table__header">
+        <th class="table__header_column" v-for="(value, key) in getColumnsTitle" :key="key">
+          {{ value }}
+        </th>
+        <th class="table__header_column">edit</th>
+      </tr>
       </thead>
       <tbody class="table__body">
-        <tr class="table__body_row" v-for="(data, index) in usersData" :key="index">
-          <td class="table__body_value" v-for="(value, key) in data" :key="key">
-            {{ value }}
-          </td>
-          <td class="table__body_value">
-            <button @toggleShowModal="toggleShowModal">edit button</button>
-          </td>
-        </tr>
+      <tr class="table__body_row" v-for="(userData, index) in tableData" :key="index">
+        <td class="table__body_value" v-for="(value, key) in userData" :key="key">
+          {{ value }}
+        </td>
+        <td class="table__body_value">
+          <button @click="setModal(tableData, index)">edit button</button>
+        </td>
+      </tr>
       </tbody>
     </table>
     <Paginator
-        :users-values="Object.keys(usersData).length"
-        :portion-size="portionSize"
-        :activePage="activePage" />
+        :users-values="Object.keys(tableData).length"
+        :portion-size="getPortionSize"
+        :active-page="getActivePagePaginator"/>
   </div>
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import {mapGetters, mapMutations} from "vuex";
 import Paginator from "~/components/Paginator/Paginator.vue";
 
-export default defineComponent({
-  components: {
-    Paginator
-  },
+export default {
+  components: {Paginator},
   props: {
-    tableName: String,
-    usersData: Object,
-    columnsTitle: Array,
-    portionSize: Number,
-    activePage: Number
+    tableData: Object,
+    tableName: String
+  },
+  computed: {
+    ...mapGetters({
+      getColumnsTitle: 'getColumnsTitle',
+      getPortionSize: "getPortionSize",
+      getActivePagePaginator: "getActivePagePaginator",
+    }),
   },
   methods: {
-    toggleShowModal(){
-      this.$emit('toggleShowModal')
+    ...mapMutations({
+      TOGGLE_MODAL: "TOGGLE_MODAL",
+      SET_ROW_MODULES: "SET_ROW_MODULES",
+      SET_INDEX_USER: "SET_INDEX_USER"
+    }),
+    setModal(obj, index) {
+      this.SET_INDEX_USER(index)
+      this.TOGGLE_MODAL(true)
+      this.SET_ROW_MODULES(obj[index])
     }
   }
-})
+}
 </script>
 
-<style scoped>
+<style>
 .table {
   margin: 51px 54px 0;
 }
@@ -77,7 +86,7 @@ export default defineComponent({
   border-radius: 5px 5px 0px 0px;
 }
 
-.table__header>* {
+.table__header > * {
   display: flex;
   justify-content: center;
   align-items: center;
