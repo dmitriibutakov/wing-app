@@ -84,6 +84,7 @@ export default {
 .modal__inputs > * {
   background: #D9D9D9;
   height: 41px;
+  padding: 0 5px;
   margin-bottom: 36px;
 }
 

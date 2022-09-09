@@ -102,14 +102,13 @@ export default {
 
 .table__header_column:not(:last-of-type),
 .table__body_value:not(:last-of-type) {
-  flex: 0 0 17%;
+  flex: 0 0 16%;
 }
 
-.table__header_column:last-of-type,
+.table__header_column:last-child,
 .table__body_value:last-of-type {
-  flex: 0 0 10%;
+  flex: 0 0 14%;
 }
-
 .table__body {
   display: flex;
   flex-direction: column;
@@ -120,6 +119,7 @@ export default {
 .table__body_row {
   position: relative;
   display: flex;
+  justify-content: space-between;
 }
 
 .table__body_row:not(:last-of-type)::after {
@@ -141,7 +141,10 @@ export default {
 
 .table__body_value button {
   background-color: rgba(255, 255, 255, 0.95);
-  font-size: 16px;
+  font-size: 14px;
   color: #0E0E0E;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #97909e4d;
 }
 </style>

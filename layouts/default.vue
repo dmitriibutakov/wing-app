@@ -85,4 +85,9 @@ td {
 th, td {
   display: inline;
 }
+@media(max-width: 1200px) {
+  body {
+    font-size: 14px;
+  }
+}
 </style>
