@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   methods: {
-    ...mapActions({ logout: 'logout' }),
+    ...mapActions({logout: 'logout'}),
   },
   mounted() {
-this.logout()
+    this.logout()
   }
 }
 </script>

@@ -7,15 +7,19 @@
       <div class="modal__body">
         <div class="modal__inputs">
           <input type="text"
-                 v-for="(value, index) in getRowModules"
+                 v-for="(value, index) in modulesArr"
                  :key="index"
                  :placeholder="value"
                  v-model="values[index]">
         </div>
       </div>
       <div class="modal__buttons">
-        <button @click="TOGGLE_MODAL(false)" class="modal__button cancel">Cancel</button>
-        <button @click="editTableRow(values)" class="modal__button save">Save</button>
+        <button @click="TOGGLE_MODAL(false)"
+                class="modal__button cancel">Cancel
+        </button>
+        <button @click="editTableRow(values)"
+                class="modal__button save">Save
+        </button>
       </div>
     </div>
   </div>
@@ -26,18 +30,13 @@ import {mapMutations, mapGetters, mapActions} from "vuex";
 
 export default {
   props: {
-    modalTitle: {
-      type: String,
-      default: "undefined"
-    },
+    modalTitle: String,
+    modulesArr: Array
   },
   data() {
     return {
-      values: ["", "", "", "", ""]
+      values: Object.assign([], this.modulesArr)
     }
-  },
-  computed: {
-    ...mapGetters({getRowModules: 'getRowModules'})
   },
   methods: {
     ...mapMutations({

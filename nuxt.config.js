@@ -57,10 +57,6 @@ export default {
         },
         services: {
           auth: {
-            initialize: {
-              onAuthStateChangedAction: 'onAuthStateChangedAction',
-              subscribeManually: true
-            },
           },
           database: {
           }

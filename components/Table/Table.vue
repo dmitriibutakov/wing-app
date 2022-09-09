@@ -1,10 +1,13 @@
 <template>
-  <div class="table">
+  <Preloader v-if="getLoading"/>
+  <div v-else class="table">
     <h1 class="table__title">{{ tableName }}</h1>
     <table class="table__block">
       <thead>
       <tr class="table__header">
-        <th class="table__header_column" v-for="(value, key) in getColumnsTitle" :key="key">
+        <th class="table__header_column"
+            v-for="(value, key) in getColumnsTitle"
+            :key="key">
           {{ value }}
         </th>
         <th class="table__header_column">edit</th>
@@ -21,28 +24,27 @@
       </tr>
       </tbody>
     </table>
-    <Paginator
-        :users-values="Object.keys(tableData).length"
-        :portion-size="getPortionSize"
-        :active-page="getActivePagePaginator"/>
+<!--    <Paginator-->
+<!--        :users-values="Object.keys(tableData).length"-->
+<!--        :portion-size="getPortionSize"-->
+<!--        :active-page="getActivePagePaginator"/>-->
   </div>
 </template>
 
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import Paginator from "~/components/Paginator/Paginator.vue";
 
 export default {
-  components: {Paginator},
   props: {
     tableData: Object,
     tableName: String
   },
   computed: {
     ...mapGetters({
-      getColumnsTitle: 'getColumnsTitle',
+      getColumnsTitle: "getColumnsTitle",
       getPortionSize: "getPortionSize",
       getActivePagePaginator: "getActivePagePaginator",
+      getLoading: "getLoading"
     }),
   },
   methods: {

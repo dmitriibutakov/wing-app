@@ -1,64 +1,41 @@
 export const state = () => ({
-    user: null,
-    tables: {},
+    tokenUser: "",
     error: "",
     isError: false,
     isLoading: false,
     isModalOpen: false,
+    portionSize: 4,
+    activeIndex: 0,
+    activePagePaginator: 1,
+    indexUser: "",
+    activeNamePage: 'page-name-1',
+    currentTable: {},
+    rowModules: [],
     tableNames: ["table-name-1", "table-name-2"],
     pageNames: ["page-name-1", "page-name-2"],
-    rowModules: [],
-    portionSize: 4,
     columnsTitle: ['*column1*', '*column2*', '*column3*', '*column4*', '*column5*'],
-    activeIndex: 0,
-    activeNamePage: 'page-name-1',
-    activePagePaginator: 1,
-    indexUser: ""
 })
 
 export const actions = {
-    async onAuthStateChangedAction({ authUser, commit }) {
-        if (!authUser) {
-        } else {
-            const { uid, email } = authUser
-            const token = await authUser.getIdToken()
-            commit('SET_USER', { uid, email, token })
-        }
-    },
 
-    async login({ commit }, { email, password }) {
+    async login({commit, state}, {email, password}) {
         commit('SET_LOADING', true)
         commit('SET_IS_ERROR', false)
         try {
-            await this.$fire.auth.signInWithEmailAndPassword(email, password)
-            this.$router.push('/')
+            const res = await this.$fire.auth.signInWithEmailAndPassword(email, password)
+            console.log(res.user.uid)
+            this.$router.push(`/${state.activeNamePage}`)
+            commit('SET_LOADING', false)
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
         }
     },
-    async logout ({commit}) {
+    async logout({commit}) {
         commit('SET_LOADING', true)
         try {
             await this.$fire.auth.signOut()
             this.$router.push('/login')
-           }
-           catch(error){
-            commit('SET_ERROR', error.message)
-            commit('SET_IS_ERROR', true)
-           } finally {
-            commit('SET_LOADING', false)
-           }
-    },
-    async fetchTables({ commit }) {
-        commit('SET_LOADING', true)
-        try {
-            let result;
-            await this.$fire.database
-                .ref('tablesData').on("value", (e) => {
-                    result = e.val()
-                    commit('SET_TABLES', result)
-                })
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
@@ -66,13 +43,28 @@ export const actions = {
             commit('SET_LOADING', false)
         }
     },
-    async editTableRow({ commit, state, actions }, values) {
+    async fetchTables({commit}, namePage) {
+        try {
+            commit('SET_LOADING', true)
+            let result;
+            await this.$fire.database
+                .ref(`tablesData/${namePage}`).on("value", (e) => {
+                    result = e.val()
+                    commit('SET_CURRENT_TABLE', result)
+                    commit('SET_LOADING', false)
+                })
+        } catch (error) {
+            commit('SET_ERROR', error.message)
+            commit('SET_IS_ERROR', true)
+        }
+    },
+    async editTableRow({commit, state, actions}, values) {
         commit('SET_LOADING', true)
         commit('TOGGLE_MODAL', false)
         try {
             await this.$fire.database.ref(`tablesData/${state.activeNamePage}/${state.indexUser}`)
                 .set(values)
-                
+
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
@@ -80,14 +72,14 @@ export const actions = {
             commit('SET_LOADING', false)
         }
     },
-    setActiveIndex: ({ commit, state }, name) => {
+    setActivePage: ({commit, state}, name) => {
         commit('SET_ACTIVE_INDEX', state.pageNames.indexOf(name))
-        commit('SET_ACTIVE_INDEX_PAGE', name)
+        commit('SET_ACTIVE_NAME_PAGE', name)
     }
 }
 
 export const getters = {
-    getTables: state => state.tables,
+    getCurrentTable: state => state.currentTable,
     getLoading: state => state.isLoading,
     getRowModules: state => state.rowModules,
     getIsModalOpen: state => state.isModalOpen,
@@ -99,14 +91,12 @@ export const getters = {
     getActivePagePaginator: state => state.activePagePaginator,
     getError: state => state.error,
     getIsError: state => state.isError,
-    getIndexUser: state => state.indexUser,
     getActiveNamePage: state => state.activeNamePage,
 }
 export const mutations = {
     SET_USER: (state, user) => state.user = user,
-    SET_TABLES: (state, tables) => {
-        const pageName = state.pageNames[state.activeIndex]
-        state.tables = tables[pageName]
+    SET_CURRENT_TABLE: (state, table) => {
+        state.currentTable = table
     },
     SET_LOADING: (state, value) => state.isLoading = value,
     TOGGLE_MODAL: (state, event) => state.isModalOpen = event,
@@ -115,5 +105,5 @@ export const mutations = {
     SET_ERROR: (state, error) => state.error = error,
     SET_IS_ERROR: (state, isError) => state.isError = isError,
     SET_INDEX_USER: (state, indexUser) => state.indexUser = indexUser,
-    SET_ACTIVE_INDEX_PAGE: (state, name) => state.activeNamePage = name,
+    SET_ACTIVE_NAME_PAGE: (state, name) => state.activeNamePage = name,
 }

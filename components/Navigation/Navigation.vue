@@ -4,12 +4,13 @@
       <div class="logo"><img src="~assets/wing.png" alt="wing-logo"></div>
     </nuxt-link>
     <nav class="navigation__links">
-      <button v-for="(name, index) in getPageNames"
-              :key="index"
-              @click="navigateTable($event.target.innerText)"
-              class="navigation__link" :class="{active: getActiveIndex === index }">
-        {{ name }}
-      </button>
+      <nuxt-link v-for="(name, index) in getPageNames"
+                 :key="index" :to="name">
+        <button class="navigation__link"
+                :class="{active: getActiveIndex === index }"
+                @click="navigateTable($event.target.innerText)">{{ name }}
+        </button>
+      </nuxt-link>
     </nav>
   </div>
 </template>
@@ -19,16 +20,16 @@ import {mapActions, mapGetters} from "vuex"
 
 export default {
   methods: {
-    ...mapActions({setActiveIndex: 'setActiveIndex', fetchTables: "fetchTables"}),
-    navigateTable(index) {
-      this.setActiveIndex(index)
-      this.fetchTables()
+    ...mapActions({setActivePage: "setActivePage", fetchTables: "fetchTables"}),
+    navigateTable(name) {
+      this.setActivePage(name)
     }
   },
   computed: {
     ...mapGetters({
-      getActiveIndex: 'getActiveIndex',
-      getPageNames: 'getPageNames',
+      getActiveIndex: "getActiveIndex",
+      getPageNames: "getPageNames",
+      getActiveNamePage: "getActiveNamePage"
     })
   }
 }
@@ -58,17 +59,13 @@ export default {
   width: 45px;
 }
 
-.navigation__links {
-  display: flex;
-  justify-content: center;
-}
-
 .navigation__link {
   color: #525252;
   font-weight: 500;
+  text-align: center;
 }
 
-.navigation__link:first-child {
+.navigation__links > *:first-of-type {
   margin-right: 90px;
 }
 
