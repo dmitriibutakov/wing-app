@@ -15,7 +15,7 @@
       </div>
       <div class="modal__buttons">
         <button @click="TOGGLE_MODAL(false)" class="modal__button cancel">Cancel</button>
-        <button @click="saveModal" class="modal__button save">Save</button>
+        <button @click="editTableRow(values)" class="modal__button save">Save</button>
       </div>
     </div>
   </div>
@@ -44,9 +44,6 @@ export default {
       TOGGLE_MODAL: "TOGGLE_MODAL",
     }),
     ...mapActions({editTableRow: 'editTableRow'}),
-    saveModal() {
-      this.editTableRow(this.values)
-    }
   }
 }
 </script>

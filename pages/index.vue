@@ -1,10 +1,10 @@
 <template>
   <main class="main">
-    <Preloader v-if="getLoading"/>
+    <Preloader v-if="getLoading" />
     <div v-else>
-      <Navigation/>
-      <Table :table-name="getTableNames[getActiveIndex]" :table-data="getTables"/>
-      <Modal v-if="getIsModalOpen" :modalTitle="getTableNames[getActiveIndex]"/>
+      <Navigation />
+      <Table :table-name="getTableNames[getActiveIndex]" :table-data="getTables" />
+      <Modal v-if="getIsModalOpen" :modalTitle="getTableNames[getActiveIndex]" />
     </div>
   </main>
 </template>
@@ -14,7 +14,7 @@ import Table from "~/components/Table/Table.vue";
 import Navigation from "@/components/Navigation/Navigation";
 import Modal from "@/components/Modal/Modal";
 import Preloader from "@/components/Preloader/Preloader"
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'IndexPage',
@@ -24,7 +24,7 @@ export default {
     Navigation, Preloader
   },
   methods: {
-    ...mapActions({fetchTables: 'fetchTables'}),
+    ...mapActions({ fetchTables: 'fetchTables' }),
   },
   computed: {
     ...mapGetters({

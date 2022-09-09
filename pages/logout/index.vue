@@ -5,19 +5,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
- async mounted() {
-   try {
-    await this.$fire.auth.signOut()
-    this.$router.push('/login')
-   }
-   catch(err){
-    alert(err.message);
-   }
+  methods: {
+    ...mapActions({ logout: 'logout' }),
+  },
+  mounted() {
+this.logout()
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

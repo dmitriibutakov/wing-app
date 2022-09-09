@@ -17,16 +17,17 @@ export const state = () => ({
 })
 
 export const actions = {
-    async onAuthStateChangedAction({authUser, commit}) {
+    async onAuthStateChangedAction({ authUser, commit }) {
         if (!authUser) {
         } else {
-            const {uid, email} = authUser
+            const { uid, email } = authUser
             const token = await authUser.getIdToken()
-            commit('SET_USER', {uid, email, token})
+            commit('SET_USER', { uid, email, token })
         }
     },
 
-    async login({commit}, {email, password}) {
+    async login({ commit }, { email, password }) {
+        commit('SET_LOADING', true)
         commit('SET_IS_ERROR', false)
         try {
             await this.$fire.auth.signInWithEmailAndPassword(email, password)
@@ -36,8 +37,20 @@ export const actions = {
             commit('SET_IS_ERROR', true)
         }
     },
-
-    async fetchTables({commit}) {
+    async logout ({commit}) {
+        commit('SET_LOADING', true)
+        try {
+            await this.$fire.auth.signOut()
+            this.$router.push('/login')
+           }
+           catch(error){
+            commit('SET_ERROR', error.message)
+            commit('SET_IS_ERROR', true)
+           } finally {
+            commit('SET_LOADING', false)
+           }
+    },
+    async fetchTables({ commit }) {
         commit('SET_LOADING', true)
         try {
             let result;
@@ -45,24 +58,29 @@ export const actions = {
                 .ref('tablesData').on("value", (e) => {
                     result = e.val()
                     commit('SET_TABLES', result)
-                    commit('SET_LOADING', false)
                 })
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
+        } finally {
+            commit('SET_LOADING', false)
         }
     },
-    async editTableRow({commit, state, actions}, values) {
+    async editTableRow({ commit, state, actions }, values) {
+        commit('SET_LOADING', true)
         commit('TOGGLE_MODAL', false)
         try {
             await this.$fire.database.ref(`tablesData/${state.activeNamePage}/${state.indexUser}`)
                 .set(values)
+                
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
+        } finally {
+            commit('SET_LOADING', false)
         }
     },
-    setActiveIndex: ({commit, state}, name) => {
+    setActiveIndex: ({ commit, state }, name) => {
         commit('SET_ACTIVE_INDEX', state.pageNames.indexOf(name))
         commit('SET_ACTIVE_INDEX_PAGE', name)
     }
