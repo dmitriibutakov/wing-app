@@ -1,5 +1,5 @@
 export const state = () => ({
-    tokenUser: "",
+    userToken: "",
     error: "",
     isError: false,
     isLoading: false,
@@ -23,7 +23,7 @@ export const actions = {
         commit('SET_IS_ERROR', false)
         try {
             const res = await this.$fire.auth.signInWithEmailAndPassword(email, password)
-            console.log(res.user.uid)
+            commit('SET_USER_TOKEN', res.user.uid)
             this.$router.push(`/${state.activeNamePage}`)
             commit('SET_LOADING', false)
         } catch (error) {
@@ -48,7 +48,8 @@ export const actions = {
             commit('SET_LOADING', true)
             let result;
             await this.$fire.database
-                .ref(`tablesData/${namePage}`).on("value", (e) => {
+                .ref(`tablesData/${namePage}`)
+                .on("value", (e) => {
                     result = e.val()
                     commit('SET_CURRENT_TABLE', result)
                     commit('SET_LOADING', false)
@@ -62,9 +63,9 @@ export const actions = {
         commit('SET_LOADING', true)
         commit('TOGGLE_MODAL', false)
         try {
-            await this.$fire.database.ref(`tablesData/${state.activeNamePage}/${state.indexUser}`)
+            await this.$fire.database
+                .ref(`tablesData/${state.activeNamePage}/${state.indexUser}`)
                 .set(values)
-
         } catch (error) {
             commit('SET_ERROR', error.message)
             commit('SET_IS_ERROR', true)
@@ -94,7 +95,7 @@ export const getters = {
     getActiveNamePage: state => state.activeNamePage,
 }
 export const mutations = {
-    SET_USER: (state, user) => state.user = user,
+    SET_USER_TOKEN: (state, user) => state.user = user,
     SET_CURRENT_TABLE: (state, table) => {
         state.currentTable = table
     },

@@ -6,7 +6,6 @@
 
 <script>
 import {mapActions} from "vuex";
-
 export default {
   methods: {
     ...mapActions({logout: 'logout'}),
@@ -16,7 +15,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

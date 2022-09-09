@@ -24,10 +24,10 @@
       </tr>
       </tbody>
     </table>
-<!--    <Paginator-->
-<!--        :users-values="Object.keys(tableData).length"-->
-<!--        :portion-size="getPortionSize"-->
-<!--        :active-page="getActivePagePaginator"/>-->
+    <Paginator
+        :users-values="Object.keys(tableData).length"
+        :portion-size="getPortionSize"
+        :active-page="getActivePagePaginator"/>
   </div>
 </template>
 

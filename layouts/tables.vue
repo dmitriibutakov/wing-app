@@ -1,10 +1,10 @@
 <template>
   <main class="main">
-      <Navigation/>
-      <Nuxt/>
-      <Modal v-if="getIsModalOpen"
-             :modules-arr="getRowModules"
-             :modalTitle="getTableNames[getActiveIndex]"/>
+    <Navigation/>
+    <Nuxt/>
+    <Modal v-if="getIsModalOpen"
+           :modules-arr="getRowModules"
+           :modalTitle="getTableNames[getActiveIndex]"/>
   </main>
 </template>
 
