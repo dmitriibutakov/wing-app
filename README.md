@@ -8,4 +8,4 @@
 <li>test login: googwing@gmail.com, password: 1-6</li>
 <li>for logout click on icon or add to adress"/logout"</li>
 </ul>
-<p>Nuxt.js app based on Firebase real-time Database requiests,<br> with using Login/Logout flow insode them</p>
+<p>Nuxt.js app based on Firebase real-time Database requiests,<br> with using Login/Logout flow inside them</p>
